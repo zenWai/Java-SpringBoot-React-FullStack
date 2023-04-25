@@ -168,20 +168,12 @@
 								<os>linux</os>
 							</platform>
 						</platforms>
-						<auth>
-							<username>zenwai</username>
-							<password>paxxword</password>
-						</auth>
 					</from>
 					<to>
 						<image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
 						<tags>
 							<tag>latest</tag>
 						</tags>
-						<auth>
-							<username>zenwai</username>
-							<password>paxxword</password>
-						</auth>
 					</to>
 				</configuration>
 			</plugin>
