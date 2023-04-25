@@ -31,6 +31,7 @@ public class Main {
         //findFirstBy[Attribute](value): returns the first record found by the specified attribute value
         //findTopBy[Attribute](value): returns the first record found by the specified attribute value
         //findBy[Attribute]Containing(value): returns a list of records where the specified attribute contains the specified value
+
         return args -> {
             var faker = new Faker();
             Random random = new Random();
