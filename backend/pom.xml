@@ -12,14 +12,13 @@
 	<groupId>org.presa</groupId>
 	<artifactId>presa-api</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<organization>
-		<name>presa</name>
-		<url>https://unknown.com</url>
-	</organization>
+
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<docker.username>zenwai</docker.username>
+		<docker.image.name>presa-api</docker.image.name>
+		<docker.image.tag/>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -175,7 +174,7 @@
 						</auth>
 					</from>
 					<to>
-						<image>docker.io/${docker.username}/${project.artifactId}:${project.version}</image>
+						<image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
 						<tags>
 							<tag>latest</tag>
 						</tags>
