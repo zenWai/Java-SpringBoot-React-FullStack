@@ -1,4 +1,5 @@
 package com.presa;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +11,7 @@ public class PingPongController {
 
     @GetMapping("/ping")
     public PingPong getPingPong() {
-        return new PingPong("Pongg: " + ++counter);
+        return new PingPong("Ping Pong: " + ++counter);
 
     }
 }
