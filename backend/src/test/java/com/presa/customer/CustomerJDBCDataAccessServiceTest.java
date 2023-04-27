@@ -28,8 +28,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         // When
@@ -44,8 +44,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         int id = underTest.selectAllCostumers()
@@ -85,8 +85,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         //when
         underTest.insertCustomer(customer);
 
@@ -106,8 +106,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         //when
@@ -136,8 +136,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
         Integer id = underTest.selectAllCostumers()
                 .stream()
@@ -168,8 +168,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         Integer id = underTest.selectAllCostumers()
@@ -192,8 +192,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         Integer id = underTest.selectAllCostumers()
@@ -229,8 +229,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         Integer id = underTest.selectAllCostumers()
@@ -267,8 +267,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         Integer id = underTest.selectAllCostumers()
@@ -305,8 +305,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20
-        );
+                20,
+                Gender.MALE);
         underTest.insertCustomer(customer);
 
         Integer id = underTest.selectAllCostumers()
@@ -337,6 +337,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestContainersUnitTest {
             assertThat(c.getName()).isEqualTo(newName); //updated
             assertThat(c.getAge()).isEqualTo(newAge);  //updated
             assertThat(c.getEmail()).isEqualTo(newEmail); //updated
+            assertThat(c.getGender()).isEqualTo(Gender.MALE);
         });
     }
 }

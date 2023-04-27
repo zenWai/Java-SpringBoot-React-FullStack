@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.*;
 class CustomerServiceTest {
     @Mock private CustomerDao customerDao;
     private CustomerService underTest;
+    private static final Random RANDOM = new Random();
 
     @BeforeEach
     void setUp() {
@@ -42,8 +44,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
         //When
         Customer actual = underTest.getCustomer(id);
@@ -73,8 +75,10 @@ class CustomerServiceTest {
         //because of the exception we want to continue after it
         when(customerDao.existsPersonWithEmail(email)).thenReturn(false);
         //we need a customerRegistrationRequest
+        int age = RANDOM.nextInt(1, 100);
+        Gender gender = age % 2 ==0 ? Gender.MALE : Gender.FEMALE;
         CustomerRegistrationRequest request= new CustomerRegistrationRequest(
-                "Joca", email, 19
+                "Joca", email, age, gender
         );
 
         //when
@@ -92,6 +96,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(request.name());
         assertThat(capturedCustomer.getEmail()).isEqualTo(request.email());
         assertThat(capturedCustomer.getAge()).isEqualTo(request.age());
+        assertThat(capturedCustomer.getGender()).isEqualTo(request.gender());
     }
     @Test
     void throwWhenAddCostumerReturnsExistsPersonWithEmail() {
@@ -99,9 +104,10 @@ class CustomerServiceTest {
         var email = "germany@stuff.com";
 
         when(customerDao.existsPersonWithEmail(email)).thenReturn(true);
-
+        int age = RANDOM.nextInt(1, 100);
+        Gender gender = age % 2 ==0 ? Gender.MALE : Gender.FEMALE;
         CustomerRegistrationRequest request= new CustomerRegistrationRequest(
-                "Joca", email, 19
+                "Joca", email, age, gender
         );
         //When
         assertThatThrownBy(() -> underTest.addCustomer(request))
@@ -117,8 +123,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "jol@gmail.com";
@@ -149,8 +155,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
@@ -177,8 +183,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "jol@gmail.com";
@@ -209,8 +215,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
@@ -237,8 +243,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "jol@gmail.com";
@@ -264,8 +270,8 @@ class CustomerServiceTest {
         int id=100;
 
         Customer customer = new Customer(
-                id,"maria","mata@gmail.com",5
-        );
+                id,"maria","mata@gmail.com",5,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(

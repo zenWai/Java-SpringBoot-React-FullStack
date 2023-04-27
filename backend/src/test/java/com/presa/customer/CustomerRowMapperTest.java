@@ -1,6 +1,5 @@
 package com.presa.customer;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -8,7 +7,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,12 +23,13 @@ class CustomerRowMapperTest {
         when(resultSet.getInt("age")).thenReturn(19);
         when(resultSet.getString("name")).thenReturn("Jakline");
         when(resultSet.getString("email")).thenReturn("jakline@super.com");
+        when(resultSet.getString("gender")).thenReturn("FEMALE");
         //when
         Customer customer = customerRowMapper.mapRow(resultSet, 1);
         //then
         Customer expected = new Customer(
-                1, "Jakline", "jakline@super.com",19
-        );
+                1, "Jakline", "jakline@super.com",19,
+                Gender.FEMALE);
         assertThat(customer).isEqualTo(expected);
     }
 }
