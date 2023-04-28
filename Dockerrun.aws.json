@@ -2,13 +2,25 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+      "name": "presa-react",
+      "image": "zenwai/presa-react:latest",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 5173
+        }
+      ]
+    },
+    {
       "name": "presa-api",
       "image": "zenwai/presa-api:27.04.2023.04.28.18",
       "essential": true,
       "memory": 512,
       "portMappings": [
         {
-          "hostPort": 80,
+          "hostPort": 8080,
           "containerPort": 8080
         }
       ],
