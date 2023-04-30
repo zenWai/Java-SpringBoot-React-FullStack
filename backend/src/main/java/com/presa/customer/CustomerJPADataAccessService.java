@@ -14,7 +14,7 @@ public class CustomerJPADataAccessService implements CustomerDao {
     }
 
     @Override
-    public List<Customer> selectAllCostumers() {
+    public List<Customer> selectAllCustomers() {
         return customerRepository.findAll();
     }
 
@@ -46,6 +46,11 @@ public class CustomerJPADataAccessService implements CustomerDao {
     @Override
     public void updateCustomer(Customer update) {
         customerRepository.save(update);
+    }
+
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email);
     }
 
 }

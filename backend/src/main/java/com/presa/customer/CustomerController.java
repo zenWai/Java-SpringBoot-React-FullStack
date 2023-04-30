@@ -1,5 +1,8 @@
 package com.presa.customer;
 
+import com.presa.jwt.JWTUtil;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +12,11 @@ import java.util.List;
 @RequestMapping("api/v1/customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final JWTUtil jwtutil;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, JWTUtil jwtutil) {
         this.customerService = customerService;
+        this.jwtutil = jwtutil;
     }
 
     /*
@@ -20,32 +25,33 @@ public class CustomerController {
             method = RequestMethod.GET
     )*/
     @GetMapping
-    public List<Customer> getCustomers() {
+    public List<CustomerDTO> getCustomers() {
         return customerService.getAllCustomers();
     }
 
     @GetMapping("{customerId}")
-    public Customer getCustomer(
+    public CustomerDTO getCustomer(
             @PathVariable("customerId") Integer customerId) {
         return customerService.getCustomer(customerId);
     }
     @PostMapping
-    public void registerCustomer(
-            @RequestBody CustomerRegistrationRequest request
-    ) {
+    public ResponseEntity<?> registerCustomer(
+            @RequestBody CustomerRegistrationRequest request) {
         customerService.addCustomer(request);
+        String jwtToken = jwtutil.issueToken(request.email(), "ROLE_USER");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, jwtToken)
+                .build();
     }
     @PutMapping("{customerId}")
     public void updateCustomer(
             @PathVariable("customerId") Integer customerId,
-            @RequestBody CustomerUpdateRequest updateRequest
-    ){
+            @RequestBody CustomerUpdateRequest updateRequest) {
         customerService.updateCustomer(customerId, updateRequest);
     }
     @DeleteMapping("{customerId}")
     public void deleteCustomerById(
-            @PathVariable("customerId") Integer customerId
-    ) {
+            @PathVariable("customerId") Integer customerId) {
         customerService.deleteCustomerById(customerId);
     }
 }

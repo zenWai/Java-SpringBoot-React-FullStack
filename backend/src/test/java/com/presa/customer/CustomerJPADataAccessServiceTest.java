@@ -27,7 +27,7 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void selectAllCostumers() {
         //when
-        underTest.selectAllCostumers();
+        underTest.selectAllCustomers();
         //then
         verify(customerRepository)
                 .findAll();
@@ -47,7 +47,7 @@ class CustomerJPADataAccessServiceTest {
     void insertCustomer() {
         //given
         Customer customer = new Customer(
-                1,"John","joca@gmail.com",2,
+                1,"John","joca@gmail.com", "password", 2,
                 Gender.MALE);
         //when
         underTest.insertCustomer(customer);
@@ -89,7 +89,7 @@ class CustomerJPADataAccessServiceTest {
     void updateCustomer() {
         //given
         Customer customer = new Customer(
-                5,"Jy","joly@gmail.com",2,
+                5,"Jy","joly@gmail.com", "password", 2,
                 Gender.MALE);
         //when
         underTest.updateCustomer(customer);
