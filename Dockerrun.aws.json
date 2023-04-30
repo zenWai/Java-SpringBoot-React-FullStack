@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "presa-react",
-      "image": "zenwai/presa-react:latest",
+      "image": "zenwai/presa-react:29.04.2023.01.27.17",
       "essential": true,
       "memory": 256,
       "portMappings": [
