@@ -62,14 +62,14 @@ jobs:
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Install AWS CLI
         run: |
-          sudo apt-get update
+          sudo apt-get update -y
           sudo apt-get install -y awscli
       - name: Wait for environment to become available
         run: |
           for i in {1..5}; do
             echo "Attempt $i"
             set +e
-            aws elasticbeanstalk describe-environments --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text
+            aws elasticbeanstalk describe-environments --region eu-central-1 --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text
             set -e
             echo "Waiting 30 seconds before retrying..."
             sleep 10
