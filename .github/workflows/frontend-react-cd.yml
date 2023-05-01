@@ -65,7 +65,7 @@ jobs:
           for i in {1..5}; do
             echo "Attempt $i"
             set +e
-            aws elasticbeanstalk describe-environments --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text | grep -q 'Ready' && break
+            aws elasticbeanstalk describe-environments --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text
             set -e
             echo "Waiting 30 seconds before retrying..."
             sleep 10
