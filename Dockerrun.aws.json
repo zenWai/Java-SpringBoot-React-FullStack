@@ -15,7 +15,7 @@
     },
     {
       "name": "presa-api",
-      "image": "zenwai/presa-api:28.04.2023.16.43.58",
+      "image": "zenwai/presa-api:30.04.2023.02.57.20",
       "essential": true,
       "memory": 512,
       "portMappings": [
