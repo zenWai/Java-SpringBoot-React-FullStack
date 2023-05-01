@@ -62,8 +62,8 @@ jobs:
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Install AWS CLI
         run: |
-          sudo yum update -y
-          sudo yum install -y awscli
+          sudo apt-get update
+          sudo apt-get install -y awscli
       - name: Wait for environment to become available
         run: |
           for i in {1..5}; do
