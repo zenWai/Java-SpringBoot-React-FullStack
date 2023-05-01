@@ -60,6 +60,16 @@ jobs:
           curl -X POST -H 'Content-type: application/json' 
           --data '{"text":":aws: Starting deployment to Elastic Beanstalk"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Wait for environment to become available
+        run: |
+          for i in {1..5}; do
+            echo "Attempt $i"
+            set +e
+            aws elasticbeanstalk describe-environments --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text | grep -q 'Ready' && break
+            set -e
+            echo "Waiting 30 seconds before retrying..."
+            sleep 10
+          done
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
@@ -81,6 +91,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git pull
           git add ../../Dockerrun.aws.json
           git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push
