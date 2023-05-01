@@ -46,9 +46,10 @@ public class Main {
             String lastName = name.lastName();
             int age = random.nextInt(16, 99);
             Gender gender = age % 2 ==0 ? Gender.MALE : Gender.FEMALE;
+            String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@fakerino.com";
             Customer customer = new Customer(
                     firstName +  " " + lastName,
-                    firstName.toLowerCase() + "." + lastName.toLowerCase() + "@joyjoi",
+                    email,
                     passwordEncoder.encode(UUID.randomUUID().toString()),
                     age,
                     gender);
