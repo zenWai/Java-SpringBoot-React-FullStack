@@ -60,10 +60,6 @@ jobs:
           curl -X POST -H 'Content-type: application/json' 
           --data '{"text":":aws: Starting deployment to Elastic Beanstalk"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update -y awscli
-          sudo apt-get install -y awscli
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
