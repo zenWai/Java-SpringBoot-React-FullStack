@@ -60,10 +60,6 @@ jobs:
           curl -X POST -H 'Content-type: application/json' 
           --data '{"text":":aws: Starting deployment to Elastic Beanstalk"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y awscli
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -76,6 +72,11 @@ jobs:
             set +e
             aws elasticbeanstalk describe-environments --region ${{ secrets.AWS_REGION }} --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text
             set -e
+            echo "$status"
+            if [[ $status == "Ready" ]]; then
+              echo "Environment is ready. Continuing with deployment..."
+              break
+            fi
             echo "Waiting 30 seconds before retrying..."
             sleep 10
           done
