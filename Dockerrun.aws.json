@@ -2,32 +2,20 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "presa-react",
-      "image": "zenwai/presa-react:01.05.2023.02.14.34",
-      "essential": true,
-      "memory": 256,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 5173
-        }
-      ]
-    },
-    {
       "name": "presa-api",
       "image": "zenwai/presa-api:01.05.2023.00.46.49",
       "essential": true,
       "memory": 512,
       "portMappings": [
         {
-          "hostPort": 8080,
+          "hostPort": 80,
           "containerPort": 8080
         }
       ],
       "environment": [
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-mh84ebjps7-stack-awsebrdsdatabase-k13z5xxk5rfu.c8jo8ln1gvnh.eu-central-1.rds.amazonaws.com:5432/customer"
+          "value": "jdbc:postgresql://awseb-e-vcti3p3w9c-stack-awsebrdsdatabase-oglhhgoa7pmn.c8jo8ln1gvnh.eu-central-1.rds.amazonaws.com:5432/ebdb"
         }
       ]
     }

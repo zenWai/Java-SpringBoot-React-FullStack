@@ -60,26 +60,6 @@ jobs:
           curl -X POST -H 'Content-type: application/json' 
           --data '{"text":":aws: Starting deployment to Elastic Beanstalk"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Configure AWS CLI
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region ${{ secrets.AWS_REGION }}
-      - name: Wait for environment to become available
-        run: |
-          for i in {1..5}; do
-            echo "Attempt $i"
-            set +e
-            status=$(aws elasticbeanstalk describe-environments --region ${{ secrets.AWS_REGION }} --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} --query 'Environments[*].Status' --output text)
-            set -e
-            echo "$status"
-            if [[ $status == "Ready" ]]; then
-              echo "Environment is ready. Continuing with deployment..."
-              break
-            fi
-            echo "Waiting 30 seconds before retrying..."
-            sleep 10
-          done
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
