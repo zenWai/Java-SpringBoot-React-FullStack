@@ -22,38 +22,30 @@ public class Main {
 
     }
     @Bean
-    CommandLineRunner runner(
-            CustomerRepository customerRepository,
-            PasswordEncoder passwordEncoder) {
-        //customerRepository.
-        //findAll(): returns all records of an entity
-        //findById(id): returns a record by its primary key
-        //save(entity): saves a new record or updates an existing record
-        //deleteById(id): deletes a record by its primary key
-        //existsById(id): checks if a record exists by its primary key
-        //count(): returns the count of records for an entity
-        //findAll(Sort sort): returns all records of an entity, sorted by the specified attribute
-        //findAll(Pageable pageable): returns a page of records, according to the specified paging and sorting options
-        //findBy[Attribute](value): returns a list of records by the specified attribute value
-        //findFirstBy[Attribute](value): returns the first record found by the specified attribute value
-        //findTopBy[Attribute](value): returns the first record found by the specified attribute value
-        //findBy[Attribute]Containing(value): returns a list of records where the specified attribute contains the specified value
+    CommandLineRunner runner(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            var faker = new Faker();
-            Random random = new Random();
-            Name name = faker.name();
-            String firstName = name.firstName();
-            String lastName = name.lastName();
-            int age = random.nextInt(16, 99);
-            Gender gender = age % 2 ==0 ? Gender.MALE : Gender.FEMALE;
-            String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@fakerino.com";
-            Customer customer = new Customer(
-                    firstName +  " " + lastName,
-                    email,
-                    passwordEncoder.encode(UUID.randomUUID().toString()),
-                    age,
-                    gender);
-            customerRepository.save(customer);
+            createRandomCustomer(customerRepository, passwordEncoder);
         };
+    }
+
+    private static void createRandomCustomer(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+        var faker = new Faker();
+        Random random = new Random();
+        Name name = faker.name();
+
+        String firstName = name.firstName();
+        String lastName = name.lastName();
+        String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@fakerino.com";
+        String password = passwordEncoder.encode(UUID.randomUUID().toString());
+        int age = random.nextInt(16, 99);
+        Gender gender = age % 2 ==0 ? Gender.MALE : Gender.FEMALE;
+
+        Customer customer = new Customer(
+                firstName +  " " + lastName,
+                email,
+                password,
+                age,
+                gender);
+        customerRepository.save(customer);
     }
 }

@@ -1,5 +1,7 @@
 package com.presa.customer;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,12 +17,13 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     @Override
     public List<Customer> selectAllCustomers() {
-        return customerRepository.findAll();
+        Page<Customer> page = customerRepository.findAll(Pageable.ofSize(80));
+        return page.getContent();
     }
 
     @Override
-    public Optional<Customer> selectCustomerById(Integer id) {
-        return customerRepository.findById(id);
+    public Optional<Customer> selectCustomerById(Integer customerId) {
+        return customerRepository.findById(customerId);
     }
 
     @Override
@@ -29,13 +32,13 @@ public class CustomerJPADataAccessService implements CustomerDao {
     }
 
     @Override
-    public boolean existsPersonWithEmail(String email) {
+    public boolean existsCustomerWithEmail(String email) {
         return customerRepository.existsCustomerByEmail(email);
     }
 
     @Override
-    public boolean existsPersonWithID(Integer id) {
-        return customerRepository.existsCustomerById(id);
+    public boolean existsCustomerWithID(Integer customerId) {
+        return customerRepository.existsCustomerById(customerId);
     }
 
     @Override
@@ -51,6 +54,12 @@ public class CustomerJPADataAccessService implements CustomerDao {
     @Override
     public Optional<Customer> selectUserByEmail(String email) {
         return customerRepository.findCustomerByEmail(email);
+    }
+
+    @Override
+    public void updateCustomerProfileImageId(String profileImageId,
+                                             Integer customerId) {
+        customerRepository.updateProfileImageId(profileImageId, customerId);
     }
 
 }

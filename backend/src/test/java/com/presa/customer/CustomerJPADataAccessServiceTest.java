@@ -3,10 +3,17 @@ package com.presa.customer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import static org.mockito.Mockito.verify;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class CustomerJPADataAccessServiceTest {
 
@@ -26,11 +33,18 @@ class CustomerJPADataAccessServiceTest {
 
     @Test
     void selectAllCostumers() {
-        //when
-        underTest.selectAllCustomers();
-        //then
-        verify(customerRepository)
-                .findAll();
+        Page<Customer> page = mock(Page.class);
+        List<Customer> customers = List.of(new Customer());
+        when(page.getContent()).thenReturn(customers);
+        when(customerRepository.findAll(any(Pageable.class))).thenReturn(page);
+        // When
+        List<Customer> expected = underTest.selectAllCustomers();
+
+        // Then
+        assertThat(expected).isEqualTo(customers);
+        ArgumentCaptor<Pageable> pageArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
+        verify(customerRepository).findAll(pageArgumentCaptor.capture());
+        assertThat(pageArgumentCaptor.getValue()).isEqualTo(Pageable.ofSize(80));
     }
 
     @Test
@@ -60,7 +74,7 @@ class CustomerJPADataAccessServiceTest {
         //given
         var email = "joly@mail.com";
         //when
-        underTest.existsPersonWithEmail(email);
+        underTest.existsCustomerWithEmail(email);
         //then
         verify(customerRepository).existsCustomerByEmail(email);
     }
@@ -70,7 +84,7 @@ class CustomerJPADataAccessServiceTest {
         //given
         var id = 100;
         //when
-        underTest.existsPersonWithID(id);
+        underTest.existsCustomerWithID(id);
         //then
         verify(customerRepository).existsCustomerById(id);
     }
@@ -96,4 +110,18 @@ class CustomerJPADataAccessServiceTest {
         //then
         verify(customerRepository).save(customer);
     }
+
+    @Test
+    void canUpdateProfileImageId() {
+        // Given
+        String profileImageId = "2222";
+        Integer customerId = 1;
+
+        // When
+        underTest.updateCustomerProfileImageId(profileImageId, customerId);
+
+        // Then
+        verify(customerRepository).updateProfileImageId(profileImageId, customerId);
+    }
+
 }
