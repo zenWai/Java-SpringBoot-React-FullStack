@@ -3,9 +3,15 @@ package com.presa.customer;
 import com.presa.exception.DuplicateResourceException;
 import com.presa.exception.RequestValidationException;
 import com.presa.exception.ResourceNotFoundException;
+import com.presa.s3.S3Buckets;
+import com.presa.s3.S3Service;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.UUID;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,12 +22,19 @@ public class CustomerService {
     private final CustomerDao customerDao;
     private final CustomerDTOMapper customerDTOMapper;
     private final PasswordEncoder passwordEncoder;
+    private final S3Service s3Service;
+    private final S3Buckets s3Buckets;
 
     public CustomerService(@Qualifier("jpa") CustomerDao customerDao,
-                           CustomerDTOMapper customerDTOMapper, PasswordEncoder passwordEncoder) {
+                           CustomerDTOMapper customerDTOMapper,
+                           PasswordEncoder passwordEncoder,
+                           S3Service s3Service,
+                           S3Buckets s3Buckets) {
         this.customerDao = customerDao;
         this.customerDTOMapper = customerDTOMapper;
         this.passwordEncoder = passwordEncoder;
+        this.s3Service = s3Service;
+        this.s3Buckets = s3Buckets;
     }
 
     public List<CustomerDTO> getAllCustomers() {
@@ -40,7 +53,7 @@ public class CustomerService {
 
     public void addCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         String email = customerRegistrationRequest.email();
-        if (customerDao.existsPersonWithEmail(email)) {
+        if (customerDao.existsCustomerWithEmail(email)) {
             throw new DuplicateResourceException(
                     "Email already taken"
             );
@@ -75,7 +88,7 @@ public void updateCustomer(Integer customerId,
         }
 
         if( updateRequest.email() != null && !updateRequest.email().equals(customer.getEmail()) ) {
-            if( customerDao.existsPersonWithEmail(updateRequest.email()) ) {
+            if( customerDao.existsCustomerWithEmail(updateRequest.email()) ) {
                 throw new DuplicateResourceException(
                         "email already taken"
                 );
@@ -90,12 +103,52 @@ public void updateCustomer(Integer customerId,
 
         customerDao.updateCustomer(customer);
     }
-    public void deleteCustomerById(Integer customerId) {
-        if( !customerDao.existsPersonWithID(customerId) ) {
+
+    private void checkIfCustomerExistsOrThrow(Integer customerId) {
+        if (!customerDao.existsCustomerWithID(customerId)) {
             throw new ResourceNotFoundException(
-                    "Customer with id [" + customerId + "] not found"
+                    "customer with id [%s] not found".formatted(customerId)
             );
         }
+    }
+
+    public void deleteCustomerById(Integer customerId) {
+        checkIfCustomerExistsOrThrow(customerId);
         customerDao.deleteCustomerById(customerId);
+    }
+
+    public void uploadCustomerProfileImage(Integer customerId,
+                                           MultipartFile file) {
+        checkIfCustomerExistsOrThrow(customerId);
+        String profileImageId = UUID.randomUUID().toString();
+        try {
+            s3Service.putObject(
+                    s3Buckets.getCustomer(),
+                    "profile-images/%s/%s".formatted(customerId, profileImageId),
+                    file.getBytes()
+            );
+        } catch (IOException e) {
+            throw new RuntimeException("failed to upload profile image", e);
+        }
+        customerDao.updateCustomerProfileImageId(profileImageId, customerId);
+    }
+
+    public byte[] getCustomerProfileImage(Integer customerId) {
+        var customer = customerDao.selectCustomerById(customerId)
+                .map(customerDTOMapper)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "customer with id [%s] not found".formatted(customerId)
+                ));
+
+        if (StringUtils.isBlank(customer.profileImageId())) {
+            throw new ResourceNotFoundException(
+                    "customer with id [%s] profile image not found".formatted(customerId));
+        }
+
+        byte[] profileImage = s3Service.getObject(
+                s3Buckets.getCustomer(),
+                "profile-images/%s/%s".formatted(customerId, customer.profileImageId())
+        );
+        return profileImage;
     }
 }

@@ -19,8 +19,9 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public List<Customer> selectAllCustomers() {
         var sql = """
-                SELECT id, name, email, password, age, gender
+                SELECT id, name, email, password, age, gender, profile_image_id
                 FROM customer
+                LIMIT 80
                 """;
 
         return jdbcTemplate.query(sql, customerRowMapper);
@@ -28,13 +29,13 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     }
 
     @Override
-    public Optional<Customer> selectCustomerById(Integer id) {
+    public Optional<Customer> selectCustomerById(Integer customerId) {
         var sql = """
-                SELECT id, name, email, password, age, gender
+                SELECT id, name, email, password, age, gender, profile_image_id
                 FROM customer
                 WHERE id = ?
                 """;
-        return jdbcTemplate.query(sql, customerRowMapper, id)
+        return jdbcTemplate.query(sql, customerRowMapper, customerId)
                 .stream()
                 .findFirst();
     }
@@ -57,7 +58,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     }
 
     @Override
-    public boolean existsPersonWithEmail(String email) {
+    public boolean existsCustomerWithEmail(String email) {
         var sql = """
                 SELECT count(id)
                 FROM customer
@@ -68,13 +69,13 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     }
 
     @Override
-    public boolean existsPersonWithID(Integer id) {
+    public boolean existsCustomerWithID(Integer customerId) {
         var sql = """
                 SELECT count(id)
                 FROM customer
                 WHERE id = ?
                 """;
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, customerId);
         return count != null && count > 0;
     }
 
@@ -125,12 +126,23 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public Optional<Customer> selectUserByEmail(String email) {
         var sql = """
-                SELECT id, name, email, password, age, gender
+                SELECT id, name, email, password, age, gender, profile_image_id
                 FROM customer
                 WHERE email = ?
                 """;
         return jdbcTemplate.query(sql, customerRowMapper, email)
                 .stream()
                 .findFirst();
+    }
+
+    @Override
+    public void updateCustomerProfileImageId(String profileImageId,
+                                             Integer customerId) {
+        var sql = """
+                UPDATE customer
+                SET profile_image_id = ?
+                WHERE id = ?
+                """;
+        jdbcTemplate.update(sql, profileImageId, customerId);
     }
 }

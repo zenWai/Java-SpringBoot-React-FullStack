@@ -9,15 +9,26 @@ cors:
   allowed-headers: "*"
   exposed-headers: "*"
 
+aws:
+  region: eu-central-1
+  s3:
+    mock: false
+    buckets:
+      customer: fs-presa-customer
+
 management:
   endpoints:
     web:
       exposure:
         include: "health,info"
+logging:
+  level:
+    org.springframework.jdbc: DEBUG
+    org.springframework.jpa: DEBUG
 
 Spring:
   datasource:
-    url: jdbc:postgresql://localhost:5332/customer
+    url: jdbc:postgresql://awseb-e-vcti3p3w9c-stack-awsebrdsdatabase-oglhhgoa7pmn.c8jo8ln1gvnh.eu-central-1.rds.amazonaws.com:5432/ebdb
     username: amigoscode
     password: password
   jpa:
@@ -30,3 +41,9 @@ Spring:
     show-sql: true
   main:
     web-application-type: servlet
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  codec:
+    max-in-memory-size: 2MB
