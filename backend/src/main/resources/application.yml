@@ -12,7 +12,7 @@ cors:
 aws:
   region: eu-central-1
   s3:
-    mock: false
+    mock: true
     buckets:
       customer: fs-presa-customer
 
@@ -28,7 +28,7 @@ logging:
 
 Spring:
   datasource:
-    url: jdbc:postgresql://awseb-e-vcti3p3w9c-stack-awsebrdsdatabase-oglhhgoa7pmn.c8jo8ln1gvnh.eu-central-1.rds.amazonaws.com:5432/ebdb
+    url: jdbc:postgresql://localhost:5332/customer
     username: amigoscode
     password: password
   jpa:
