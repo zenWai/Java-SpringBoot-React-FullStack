@@ -36,7 +36,7 @@ public class Main {
         String firstName = name.firstName();
         String lastName = name.lastName();
         String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@fakerino.com";
-        String password = passwordEncoder.encode(UUID.randomUUID().toString());
+        String password = "password";
         int age = random.nextInt(16, 99);
         Gender gender = age % 2 ==0 ? Gender.MALE : Gender.FEMALE;
 
@@ -47,6 +47,7 @@ public class Main {
                 age,
                 gender);
         customerRepository.save(customer);
+        System.out.println(email);
     }
 
 }

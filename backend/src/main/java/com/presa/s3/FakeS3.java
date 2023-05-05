@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class FakeS3 implements S3Client {
 
     private static final String PATH =
-            System.getProperty("user.home") + "/.amigoscode/s3";
+            System.getProperty("user.home") + "/.fakeS3PresaCustomer/s3";
 
     @Override
     public String serviceName() {
