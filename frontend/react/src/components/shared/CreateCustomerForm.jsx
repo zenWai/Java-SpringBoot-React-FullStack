@@ -53,7 +53,7 @@ const CreateCustomerForm = ({ onSuccess }) => {
                 }}
                 validationSchema={Yup.object({
                     name: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
+                        .max(25, 'Must be 25 characters or less')
                         .required('Required'),
                     email: Yup.string()
                         .email('Must be 20 characters or less')
@@ -64,7 +64,7 @@ const CreateCustomerForm = ({ onSuccess }) => {
                         .required(),
                     password: Yup.string()
                         .min(4, 'Must be 4 characters or more')
-                        .max(15, 'Must be 15 characters or less')
+                        .max(25, 'Must be 25 characters or less')
                         .required('Required'),
                     gender: Yup.string()
                         .oneOf(
