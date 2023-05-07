@@ -11,7 +11,8 @@ export const useCustomers = () => {
         setLoading(true);
         try {
             const res = await getCustomers();
-            setCustomers(res.data);
+            const sortedCustomers = res.data.sort((a, b) => a.id - b.id);
+            setCustomers(sortedCustomers);
         } catch (err) {
             setError(err.response.data.message);
             errorNotification(err.code, err.response.data.message);
