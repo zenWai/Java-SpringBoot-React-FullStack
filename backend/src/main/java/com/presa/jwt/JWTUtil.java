@@ -35,11 +35,11 @@ public class JWTUtil {
     public String issueToken(
             String subject,
             Map<String, Object> claims) {
-        String token = Jwts
+        return Jwts
                 .builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuer("https://amigoscode.com")
+                .setIssuer("https://www.full-stack-react.awsfernandopresa.com/dashboard/customers")
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(
                         Date.from(
@@ -48,7 +48,6 @@ public class JWTUtil {
                 )
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
-        return token;
     }
 
     public String getSubject(String token) {
@@ -56,13 +55,12 @@ public class JWTUtil {
     }
 
     private Claims getClaims(String token) {
-        Claims claims = Jwts
+        return Jwts
                 .parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return claims;
     }
 
     private Key getSigningKey() {

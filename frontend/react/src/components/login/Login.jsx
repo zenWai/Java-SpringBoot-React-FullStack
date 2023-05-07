@@ -55,7 +55,7 @@ const LoginForm = () => {
                         .required("Password is required")
                 })
             }
-            initialValues={{username: '', password: ''}}
+            initialValues={{username: 'test@test.com', password: 'password'}}
             onSubmit={(values, {setSubmitting}) => {
                 setSubmitting(true);
                 login(values).then(res => {
@@ -78,7 +78,7 @@ const LoginForm = () => {
                             label={"Email"}
                             name={"username"}
                             type={"email"}
-                            placeholder={"hello@amigoscode.com"}
+                            placeholder={"test@test.com"}
                         />
                         <MyTextInput
                             label={"Password"}
