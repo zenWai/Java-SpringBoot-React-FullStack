@@ -34,6 +34,7 @@ const Customer = () => {
                         <WrapItem key={index}>
                             <CardWithImage
                                 {...customer}
+                                fetchCustomers={fetchCustomers}
                             />
                         </WrapItem>
                     ))}
