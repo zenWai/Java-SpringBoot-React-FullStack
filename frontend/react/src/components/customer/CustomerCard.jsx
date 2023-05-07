@@ -107,6 +107,13 @@ export default function CardWithImage({ id, name, email, age, gender, fetchCusto
                                             Cancel
                                         </Button>
                                         <Button colorScheme='red' onClick={() => {
+                                            if(email === 'test@test.com') {
+                                                errorNotification(
+                                                    "Test account",
+                                                    "Please don't delete the test account"
+                                                )
+                                                onclose();
+                                            }
                                             deleteCustomer(id).then(res => {
                                                 console.log(res)
                                                 successNotification(
@@ -114,7 +121,6 @@ export default function CardWithImage({ id, name, email, age, gender, fetchCusto
                                                     `${name} was successfully deleted`
                                                 )
                                                 fetchCustomers();
-
                                             }).catch(err => {
                                                 console.log(err);
                                                 errorNotification(
@@ -132,7 +138,6 @@ export default function CardWithImage({ id, name, email, age, gender, fetchCusto
                             </AlertDialogOverlay>
                         </AlertDialog>
                     </Stack>
-
                 </Stack>
             </Box>
         </Center>

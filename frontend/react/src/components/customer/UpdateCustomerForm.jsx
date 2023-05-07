@@ -61,7 +61,6 @@ const MyDropzone = ({ customerId, fetchCustomers }) => {
     )
 }
 
-// And now we can use these
 const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
     return (
         <>
@@ -93,6 +92,13 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
                 })}
                 onSubmit={(updatedCustomer, {setSubmitting}) => {
                     setSubmitting(true);
+                    if (initialValues.email === 'test@test.com') {
+                        errorNotification(
+                            'Cannot update customer',
+                            'This customer cannot be updated.'
+                        );
+                        setSubmitting(false);
+                    } else {
                     updateCustomer(customerId, updatedCustomer)
                         .then(res => {
                             console.log(res);
@@ -110,7 +116,7 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
                     }).finally(() => {
                         setSubmitting(false);
                     })
-                }}
+                }}}
             >
                 {({isValid, isSubmitting, dirty}) => (
                     <Form>
@@ -144,5 +150,4 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
         </>
     );
 };
-
 export default UpdateCustomerForm;

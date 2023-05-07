@@ -86,7 +86,7 @@ const CreateCustomerForm = ({ onSuccess }) => {
                         }).catch(err => {
                         console.log(err);
                         errorNotification(
-                            err.code,
+                            "Error",
                             err.response.data.message
                         )
                     }).finally(() => {
