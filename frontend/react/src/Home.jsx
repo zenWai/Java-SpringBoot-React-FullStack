@@ -10,5 +10,4 @@ const Home = () => {
         </SidebarWithHeader>
     )
 }
-
 export default Home;
