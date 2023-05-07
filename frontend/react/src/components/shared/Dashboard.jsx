@@ -69,7 +69,7 @@ export default function BasicStatistics() {
         <Box
             maxW="100%"
             mx="auto"
-            pt={0}
+            pt={1}
             px={{ base: 1, sm: 1, md: 1 }}
         >
             <chakra.h1
@@ -84,19 +84,19 @@ export default function BasicStatistics() {
                 <Dashboard
                     title="Total Customers"
                     stat={totalCustomers}
-                    imageSrc="https://fs-presa-customer.s3.eu-central-1.amazonaws.com/picsdashboard/icon_customers.png"
+                    imageSrc="https://st4.depositphotos.com/1842549/21262/i/450/depositphotos_212625700-stock-photo-clients-icon-internet-button-white.jpg"
                     bg="white"
                 />
                 <Dashboard
                     title="Average Customers age"
                     stat={`${averageAge}y`}
-                    imageSrc="https://fs-presa-customer.s3.eu-central-1.amazonaws.com/picsdashboard/icon_ages.png"
+                    imageSrc="https://cdn-icons-png.flaticon.com/512/31/31370.png"
                     bg="white"
                 />
                 <Dashboard
                     title="Total Customers with Profile Picture"
                     stat={`${percentCustomersWithPic}%`}
-                    imageSrc="https://fs-presa-customer.s3.eu-central-1.amazonaws.com/picsdashboard/icon_profilepic.png"
+                    imageSrc="https://cdn-icons-png.flaticon.com/128/4795/4795910.png"
                     bg="white"
                 />
             </SimpleGrid>
@@ -107,9 +107,10 @@ export default function BasicStatistics() {
                     borderRadius="lg"
                     boxShadow="lg"
                     bg="white"
+                    height={400}
                 >
                     <Text fontSize="2xl" fontWeight="bold" mb={4}>
-                        Gender Distribution
+                        Gender Representation
                     </Text>
                     <PieChartWithCustomizedLabel customers={customers}/>
                 </Box>
@@ -119,6 +120,7 @@ export default function BasicStatistics() {
                     borderRadius="lg"
                     boxShadow="lg"
                     bg="white"
+                    height={400}
                 >
                     <Text fontSize="2xl" fontWeight="bold" mb={4}>
                         Age Group Distribution

@@ -62,7 +62,7 @@ const PieChartWithCustomizedLabel = ({ customers, loading }) => {
                     ))}
                 </Pie>
                 <Tooltip />
-                <Legend layout="horizontal" verticalAlign="bottom" align="center" />
+                <Legend layout="horizontal" verticalAlign="top" align="center" />
             </PieChart>
         </ResponsiveContainer>
     );

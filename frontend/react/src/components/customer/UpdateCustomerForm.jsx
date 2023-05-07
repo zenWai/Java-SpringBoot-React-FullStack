@@ -81,13 +81,13 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
                 initialValues={initialValues}
                 validationSchema={Yup.object({
                     name: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
+                        .max(25, 'Must be 25 characters or less')
                         .required('Required'),
                     email: Yup.string()
                         .email('Must be 20 characters or less')
                         .required('Required'),
                     age: Yup.number()
-                        .min(16, 'Must be at least 16 years of age')
+                        .min(1, 'Must be at least 1 years of age')
                         .max(100, 'Must be less than 100 years of age')
                         .required(),
                 })}

@@ -4,32 +4,36 @@ import {Spinner} from "@chakra-ui/react";
 
 
 const renderBar = (props, data, dataKey, color) => {
-    const { x, y, width, value } = props;
+    let { x, y, width, value } = props;
     const radius = 10; // radius of the circle
 
     const currentAgeGroup = data.find((group) => group.ageGroup === props.ageGroup);
     const shouldRenderCircle =
         currentAgeGroup &&
         (
-            (dataKey === 'femalesWithPic' && currentAgeGroup.femalesWithPic > currentAgeGroup.malesWithPic) ||
-            (dataKey === 'malesWithPic' && currentAgeGroup.malesWithPic > currentAgeGroup.femalesWithPic)
+            (dataKey === 'femalesWithPic' && currentAgeGroup.femalesWithPic > 0 && currentAgeGroup.femalesWithPic >= currentAgeGroup.malesWithPic) ||
+            (dataKey === 'malesWithPic' && currentAgeGroup.malesWithPic > 0 && currentAgeGroup.malesWithPic >= currentAgeGroup.femalesWithPic)
         );
+
+    const circleValue = shouldRenderCircle ? currentAgeGroup[dataKey] : null;
+    value = shouldRenderCircle ? [Math.round(circleValue).toString()] : [];
 
     return (
         <g>
             <rect {...props} />
-            {shouldRenderCircle &&
-                <circle cx={x + width / 2} cy={y-radius*1.3} r={radius*1.5} fill={color} /> }
-            {shouldRenderCircle &&
+            {shouldRenderCircle && (
+                <circle cx={x + width / 2} cy={y - radius * 1.3} r={radius * 1.5} fill={color}>
+                    <title>{circleValue}</title>
+                </circle>
+            )}
+            {shouldRenderCircle && (
                 <text x={x + width / 2} y={y - radius} fill="#fff" textAnchor="middle" dominantBaseline="middle">
                     {value[0]}
-                    {value[1]}
                 </text>
-            }
+            )}
         </g>
     );
-};
-
+}
 export const BarChartWithMinHeight = ({ customers, loading }) => {
 
     const [ageGroupData, setAgeGroupData] = useState(null);
@@ -100,10 +104,10 @@ export const BarChartWithMinHeight = ({ customers, loading }) => {
 
     return (
         <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={ageGroupData}>
+            <BarChart data={ageGroupData} margin={{ top: 30, right: 30, left: 20, bottom: 5 }} >
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="ageGroup"/>
-                <YAxis domain={[0, 'dataMax + 10']}/>
+                <YAxis domain={[0, 100]} tickCount={5} tick={[0, 25, 50, 75, 100]} />
                 <Tooltip/>
                 <Legend/>
                 <Bar
