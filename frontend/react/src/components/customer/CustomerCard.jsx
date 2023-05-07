@@ -20,10 +20,9 @@ import {customerProfilePictureUrl, deleteCustomer} from "../../services/client.j
 import {errorNotification, successNotification} from "../../services/notification.js";
 import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
-export default function CardWithImage({id, name, email, age, gender, fetchCustomers}) {
+export default function CardWithImage({ id, name, email, age, gender, fetchCustomers, profileImageId }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
-
     return (
         <Center py={6}>
             <Box
@@ -46,7 +45,7 @@ export default function CardWithImage({id, name, email, age, gender, fetchCustom
                 <Flex justify={'center'} mt={-12}>
                     <Avatar
                         size={'xl'}
-                        src={customerProfilePictureUrl(id)}
+                        src={profileImageId ? customerProfilePictureUrl(id) : undefined}
                         alt={'Author'}
                         css={{
                             border: '2px solid white',
