@@ -79,3 +79,6 @@ export const uploadCustomerProfilePicture = async (id, formData) => {
 
 export const customerProfilePictureUrl = (id) =>
     `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/${id}/profile-image`;
+
+export const websiteImageUrl = (fileName) =>
+    `${import.meta.env.VITE_API_BASE_URL}/api/v1/website-images/${fileName}`;

@@ -15,6 +15,7 @@ aws:
     mock: true
     buckets:
       customer: fs-presa-customer
+      websiteImages: fs-presa-customer
 
 management:
   endpoints:
