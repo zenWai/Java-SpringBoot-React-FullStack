@@ -17,7 +17,7 @@ public class CustomerJPADataAccessService implements CustomerDao {
 
     @Override
     public List<Customer> selectAllCustomers() {
-        Page<Customer> page = customerRepository.findAll(Pageable.ofSize(80));
+        Page<Customer> page = customerRepository.findAll(Pageable.ofSize(180));
         return page.getContent();
     }
 

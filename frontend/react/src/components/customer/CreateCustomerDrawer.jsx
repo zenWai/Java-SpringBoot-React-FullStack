@@ -33,6 +33,7 @@ const CreateCustomerDrawer = ({ fetchCustomers }) => {
                 <DrawerBody>
                     <CreateCustomerForm
                         onSuccess={fetchCustomers}
+                        onClose={onClose}
                     />
                 </DrawerBody>
 

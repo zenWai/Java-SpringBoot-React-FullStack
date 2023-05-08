@@ -26,15 +26,14 @@ import {
     FiChevronDown,
     FiHome,
     FiMenu,
-    FiSettings,
     FiUsers
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
+import {customerProfilePictureUrl} from "../../services/client.js";
 
 const LinkItems = [
     {name: 'Home', route: '/dashboard', icon: FiHome},
     {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers},
-    {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
 ];
 
 export default function SidebarWithHeader({children}) {
@@ -173,7 +172,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                             <HStack>
                                 <Avatar
                                     size={'sm'}
-                                    src={''}
+                                    src={customer && customerProfilePictureUrl(customer.id)}
                                 />
                                 <VStack
                                     display={{base: 'none', md: 'flex'}}
@@ -195,9 +194,6 @@ const MobileNav = ({onOpen, ...rest}) => {
                         <MenuList
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
-                            <MenuItem>Billing</MenuItem>
                             <MenuDivider/>
                             <MenuItem onClick={logOut}>
                                 Sign out

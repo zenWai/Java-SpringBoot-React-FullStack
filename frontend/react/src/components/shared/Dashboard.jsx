@@ -1,10 +1,8 @@
 import {
     Box,
     chakra,
-    Flex,
     SimpleGrid,
     Text,
-    useColorModeValue,
     Image,
     Stack,
 } from '@chakra-ui/react';
@@ -45,7 +43,7 @@ function Dashboard({ title, stat, imageSrc }) {
     );
 }
 
-export default function BasicStatistics() {
+export default function BasicStatisticsDashboard() {
     const { customers, loading } = useCustomers();
     if (loading || !customers) {
         return <Text>Loading...</Text>;
