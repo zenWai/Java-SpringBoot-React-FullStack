@@ -9,6 +9,7 @@ import {
 import PieChartWithCustomizedLabel from '../charts/PieChartWithCustomizedLabel.jsx';
 import { BarChartWithMinHeight } from '../charts/BarChart.jsx';
 import {useCustomers} from "../customer/UseFetchCustomers.jsx";
+import {websiteImageUrl} from "../../services/client.js";
 
 function Dashboard({ title, stat, imageSrc }) {
     return (
@@ -82,19 +83,19 @@ export default function BasicStatisticsDashboard() {
                 <Dashboard
                     title="Total Customers"
                     stat={totalCustomers}
-                    imageSrc="https://st4.depositphotos.com/1842549/21262/i/450/depositphotos_212625700-stock-photo-clients-icon-internet-button-white.jpg"
+                    imageSrc={websiteImageUrl("icon_customers.png")}
                     bg="white"
                 />
                 <Dashboard
                     title="Average Customers age"
                     stat={`${averageAge}y`}
-                    imageSrc="https://cdn-icons-png.flaticon.com/512/31/31370.png"
+                    imageSrc={websiteImageUrl("icon_ages.png")}
                     bg="white"
                 />
                 <Dashboard
                     title="Total Customers with Profile Picture"
                     stat={`${percentCustomersWithPic}%`}
-                    imageSrc="https://cdn-icons-png.flaticon.com/128/4795/4795910.png"
+                    imageSrc={websiteImageUrl("icon_profilepic.png")}
                     bg="white"
                 />
             </SimpleGrid>

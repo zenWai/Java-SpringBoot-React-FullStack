@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -44,8 +45,8 @@ public class SecurityFilterChainConfig {
                 .permitAll()
                 .requestMatchers(
                         HttpMethod.GET,
-                        "/ping",
-                        "/api/v1/customers/*/profile-image"
+                        "/api/v1/customers/*/profile-image",
+                        "/api/v1/website-images/*"
                 )
                 .permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/**")
