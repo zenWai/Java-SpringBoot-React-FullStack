@@ -8,8 +8,7 @@ const renderBar = (props, data, dataKey, color) => {
     const radius = 10; // radius of the circle
 
     const currentAgeGroup = data.find((group) => group.ageGroup === props.ageGroup);
-    const shouldRenderCircle = currentAgeGroup && currentAgeGroup[dataKey] > 0;
-
+    const shouldRenderCircle = currentAgeGroup && currentAgeGroup[dataKey] > 0 && !isNaN(currentAgeGroup[dataKey]);
     const circleValue = shouldRenderCircle ? currentAgeGroup[dataKey] : null;
     const formattedCircleValue = isNaN(circleValue) ? '0' : Math.round(circleValue).toFixed(0);
     value = shouldRenderCircle ? [formattedCircleValue] : [];
