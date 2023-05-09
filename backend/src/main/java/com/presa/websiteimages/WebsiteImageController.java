@@ -1,5 +1,6 @@
 package com.presa.websiteimages;
 
+import com.presa.exception.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,13 +20,16 @@ public class WebsiteImageController {
         this.websiteImageService = websiteImageService;
     }
 
-
     @GetMapping("/website-images/{key}")
     public ResponseEntity<byte[]> getWebsiteImage(@PathVariable String key) {
-        byte[] imageData = websiteImageService.getWebsiteImage(key);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG);
-        HttpStatus status = imageData == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-        return new ResponseEntity<>(imageData, headers, status);
+        try {
+            byte[] imageData = websiteImageService.getWebsiteImage(key);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+            HttpStatus status = imageData == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+            return new ResponseEntity<>(imageData, headers, status);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
+        }
     }
 }
