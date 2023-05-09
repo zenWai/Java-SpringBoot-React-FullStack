@@ -13,12 +13,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.testcontainers.shaded.com.google.common.io.Files;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -49,13 +49,12 @@ public class WebsiteImagesIntegrationTest {
     void canDownloadWebsiteImage() throws IOException {
         // Given
         String imageName = "icon_customers.png";
-        String imageKey = "website-images/" + imageName;
 
         Resource image = new ClassPathResource(imageName);
 
         // Upload the image to the S3 bucket
-        byte[] imageBytes = Files.readAllBytes(image.getFile().toPath());
-        s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(imageKey).build(),
+        byte[] imageBytes = Files.toByteArray(image.getFile());
+        s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(imageName).build(),
                 RequestBody.fromBytes(imageBytes));
 
         // When
@@ -71,7 +70,7 @@ public class WebsiteImagesIntegrationTest {
                 .getResponseBody();
 
         // Then
-        byte[] actual = Files.readAllBytes(image.getFile().toPath());
+        byte[] actual = Files.toByteArray(image.getFile());
         assertThat(actual).isEqualTo(downloadedImage);
     }
 
