@@ -8,15 +8,11 @@ const renderBar = (props, data, dataKey, color) => {
     const radius = 10; // radius of the circle
 
     const currentAgeGroup = data.find((group) => group.ageGroup === props.ageGroup);
-    const shouldRenderCircle =
-        currentAgeGroup &&
-        (
-            (dataKey === 'femalesWithPic' && currentAgeGroup.femalesWithPic > 0 && currentAgeGroup.femalesWithPic >= currentAgeGroup.malesWithPic) ||
-            (dataKey === 'malesWithPic' && currentAgeGroup.malesWithPic > 0 && currentAgeGroup.malesWithPic >= currentAgeGroup.femalesWithPic)
-        );
+    const shouldRenderCircle = currentAgeGroup && currentAgeGroup[dataKey] > 0;
 
     const circleValue = shouldRenderCircle ? currentAgeGroup[dataKey] : null;
-    value = shouldRenderCircle ? [Math.round(circleValue).toString()] : [];
+    const formattedCircleValue = isNaN(circleValue) ? '0' : Math.round(circleValue).toFixed(0);
+    value = shouldRenderCircle ? [formattedCircleValue] : [];
 
     return (
         <g>
