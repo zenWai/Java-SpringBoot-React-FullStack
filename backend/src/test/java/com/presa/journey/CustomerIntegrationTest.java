@@ -1,8 +1,11 @@
 package com.presa.journey;
 
-import com.presa.customer.*;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
+import com.presa.customer.CustomerDTO;
+import com.presa.customer.CustomerRegistrationRequest;
+import com.presa.customer.CustomerUpdateRequest;
+import com.presa.customer.Gender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

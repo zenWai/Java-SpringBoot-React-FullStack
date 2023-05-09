@@ -1,6 +1,7 @@
 package com.presa.journey;
 
 import com.presa.exception.ResourceNotFoundException;
+import com.presa.jwt.JWTUtil;
 import com.presa.s3.S3Buckets;
 import com.presa.s3.S3Service;
 import com.presa.websiteimages.WebsiteImageService;
@@ -29,7 +30,8 @@ public class WebsiteImagesIntegrationTest {
 
     @Autowired
     private WebTestClient webTestClient;
-
+    @Autowired
+    private JWTUtil jwtUtil;
     @Mock
     private S3Client s3Client;
 
@@ -51,7 +53,8 @@ public class WebsiteImagesIntegrationTest {
         String imageName = "icon_customers.png";
 
         Resource image = new ClassPathResource(imageName);
-
+        String testUsername = "testuser";
+        String jwt = jwtUtil.issueToken(testUsername);
         // Upload the image to the S3 bucket
         byte[] imageBytes = Files.toByteArray(image.getFile());
         s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(imageName).build(),
@@ -60,6 +63,7 @@ public class WebsiteImagesIntegrationTest {
         byte[] downloadedImage = webTestClient.get()
                 .uri(CUSTOMER_PATH + imageName)
                 .accept(MediaType.IMAGE_PNG)
+                .header("Authorization", "Bearer " + jwt)
                 .exchange()
                 .expectStatus()
                 .isOk()
