@@ -1,7 +1,6 @@
-/*package com.presa.journey;
+package com.presa.journey;
 
 import com.presa.exception.ResourceNotFoundException;
-import com.presa.jwt.JWTUtil;
 import com.presa.s3.S3Buckets;
 import com.presa.s3.S3Service;
 import com.presa.websiteimages.WebsiteImageService;
@@ -20,7 +19,6 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -82,4 +80,3 @@ public class WebsiteImagesIntegrationTest {
                 .hasMessage("Website image with name " + imageName + " not found");
     }
 }
-*/
