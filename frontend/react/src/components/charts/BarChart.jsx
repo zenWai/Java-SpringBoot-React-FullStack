@@ -8,9 +8,9 @@ const renderBar = (props, data, dataKey, color) => {
     const radius = 10; // radius of the circle
 
     const currentAgeGroup = data.find((group) => group.ageGroup === props.ageGroup);
-    const shouldRenderCircle = currentAgeGroup && currentAgeGroup[dataKey] > 0 && !isNaN(currentAgeGroup[dataKey]);
+    const shouldRenderCircle = currentAgeGroup && Number(currentAgeGroup[dataKey]) > 0;
     const circleValue = shouldRenderCircle ? currentAgeGroup[dataKey] : null;
-    const formattedCircleValue = isNaN(circleValue) ? '0' : Math.round(circleValue).toFixed(0);
+    const formattedCircleValue = shouldRenderCircle ? Math.round(circleValue).toFixed(0) : '0';
     value = shouldRenderCircle ? [formattedCircleValue] : [];
 
     return (
@@ -73,9 +73,9 @@ export const BarChartWithMinHeight = ({ customers, loading }) => {
 
                 return {
                     ageGroup: group,
-                    malesWithPic: ((data.maleWithPicCount / data.maleCount) * 100).toFixed(2),
-                    femalesWithPic: ((data.femaleWithPicCount / data.femaleCount) * 100).toFixed(2),
-                    totalWithPic: ((totalGroupWithPicCount / totalGroupCount) * 100).toFixed(2),
+                    malesWithPic: data.maleCount > 0 ? ((data.maleWithPicCount / data.maleCount) * 100).toFixed(2) : 0,
+                    femalesWithPic: data.femaleCount > 0 ? ((data.femaleWithPicCount / data.femaleCount) * 100).toFixed(2) : 0,
+                    totalWithPic: totalGroupCount > 0 ? ((totalGroupWithPicCount / totalGroupCount) * 100).toFixed(2) : 0,
                 };
             });
 
