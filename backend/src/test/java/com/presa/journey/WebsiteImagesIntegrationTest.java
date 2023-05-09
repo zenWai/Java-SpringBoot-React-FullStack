@@ -56,7 +56,6 @@ public class WebsiteImagesIntegrationTest {
         byte[] imageBytes = Files.toByteArray(image.getFile());
         s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(imageName).build(),
                 RequestBody.fromBytes(imageBytes));
-
         // When
         byte[] downloadedImage = webTestClient.get()
                 .uri(CUSTOMER_PATH + imageName)
