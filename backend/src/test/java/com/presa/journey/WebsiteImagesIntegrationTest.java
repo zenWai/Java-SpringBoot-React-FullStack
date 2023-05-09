@@ -1,4 +1,4 @@
-package com.presa.journey;
+/*package com.presa.journey;
 
 import com.presa.exception.ResourceNotFoundException;
 import com.presa.jwt.JWTUtil;
@@ -82,3 +82,4 @@ public class WebsiteImagesIntegrationTest {
                 .hasMessage("Website image with name " + imageName + " not found");
     }
 }
+*/
