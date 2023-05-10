@@ -29,7 +29,7 @@ import {
     FiUsers
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
-import {customerProfilePictureUrl} from "../../services/client.js";
+import {customerProfilePictureUrl, websiteImageUrl} from "../../services/client.js";
 
 const LinkItems = [
     {name: 'Home', route: '/dashboard', icon: FiHome},
@@ -76,15 +76,15 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={75} mt={2} justifyContent="space-between">
+            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={105} mt={2} justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
-                    Dashboard
+                    Customer Management
                 </Text>
                 <Image
                     borderRadius='full'
                     boxSize='75px'
-                    src='https://user-images.githubusercontent.com/40702606/210880158-e7d698c2-b19a-4057-b415-09f48a746753.png'
-                    alt='Amigoscode'
+                    src={websiteImageUrl("report.png")}
+                    alt='Logo'
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
