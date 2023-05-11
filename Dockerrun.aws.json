@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "presa-api",
-      "image": "zenwai/presa-api:09.05.2023.15.55.26",
+      "image": "zenwai/presa-api:11.05.2023.16.23.46",
       "essential": true,
       "memory": 512,
       "portMappings": [
