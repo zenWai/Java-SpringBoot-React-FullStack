@@ -4,6 +4,6 @@ aws:
 
 spring:
   datasource:
-    url: jdbc:postgresql://awseb-e-vcti3p3w9c-stack-awsebrdsdatabase-oglhhgoa7pmn.c8jo8ln1gvnh.eu-central-1.rds.amazonaws.com:5432/ebdb
-    username: amigoscode
-    password: password
+    url: jdbc-secretsmanager:postgresql://awseb-e-vcti3p3w9c-stack-awsebrdsdatabase-oglhhgoa7pmn.c8jo8ln1gvnh.eu-central-1.rds.amazonaws.com:5432/ebdb
+    username: /test/customer/postgres
+    driver-class-name: com.amazonaws.secretsmanager.sql.AWSSecretsManagerPostgreSQLDriver
