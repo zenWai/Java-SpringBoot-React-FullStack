@@ -6,7 +6,7 @@ This full-stack application is a customer dashboard where users can register, lo
 A strong emphasis has been placed on the DevOps side of the project, ensuring seamless integration, testing, and deployment.
 
 <br clear="left"/>
-
+DEMO: https://www.full-stack-react.awsfernandopresa.com/
 ## DevOps
 One of the main highlights of this project is the significant emphasis on DevOps and continuous integration/continuous deployment (CI/CD) practices:
 
