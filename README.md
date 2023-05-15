@@ -7,6 +7,7 @@ A strong emphasis has been placed on the DevOps side of the project, ensuring se
 
 <br clear="left"/>
 DEMO: https://www.full-stack-react.awsfernandopresa.com/
+
 ## DevOps
 One of the main highlights of this project is the significant emphasis on DevOps and continuous integration/continuous deployment (CI/CD) practices:
 
